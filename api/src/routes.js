@@ -23,7 +23,7 @@ function create_order(req, res) {
         user_info: {
             email: req.body.user_info.email
         },
-        timestamp: Date.now()
+        timestamp: Date.now(),
     }
 
     order.hash = hash_order(order);

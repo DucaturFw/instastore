@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/DucaturFw/instastore#readme",
   "dependencies": {
+    "deep-sort-object": "^1.0.2",
     "express": "^4.16.3",
     "mongodb": "^3.0.5",
     "read-yaml": "^1.1.0"
