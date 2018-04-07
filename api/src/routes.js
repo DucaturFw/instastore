@@ -2,7 +2,7 @@ let read_yaml = require('read-yaml');
 
 let hash_order = require('./hash_order');
 let validate_order = require('./validate').validate_order;
-let save_order = require('./db').save_order
+let db = require('./db');
 
 const config = read_yaml.sync('./config.yaml');
 config.price = parseFloat(config.price);
@@ -31,7 +31,7 @@ function create_order(req, res) {
     console.log('Saving the order:', order)
 
     // Save order to database
-    save_order(order)
+    db.save_order(order)
         .then(() => {
             // Sending response
             res.status(201).send({
@@ -46,6 +46,16 @@ function create_order(req, res) {
         })
 }
 
+function get_orders(req, res) {
+    db.get_orders()
+        .then((orders) => res.status(200).send(orders))
+        .catch((err) => {
+            console.log('Error', err);
+            res.status(500).send({'error': 'Smth bad has happened.'});
+        })
+}
+
 module.exports = function routes(app) {
     app.post('/create_order', create_order);
+    app.get('/get_orders', get_orders);
 }
