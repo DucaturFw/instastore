@@ -73,7 +73,7 @@ interface IFullOrder
 
 function getTransactions(addr: string, callback: (error, txs: ITransaction[]) => void)
 {
-	let url = `https://blockchain.info/rawaddr/`
+	let url = `https://testnet.blockchain.info/rawaddr/`
 	agent.get(`${url}${addr}`, (err, res) =>
 	{
 		if (err)

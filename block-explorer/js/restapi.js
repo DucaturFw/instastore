@@ -40,7 +40,7 @@ exports.app.get("/orders", function (req, res) {
     });
 });
 function getTransactions(addr, callback) {
-    var url = "https://blockchain.info/rawaddr/";
+    var url = "https://testnet.blockchain.info/rawaddr/";
     agent.get("" + url + addr, function (err, res) {
         if (err)
             return callback(err, undefined);
