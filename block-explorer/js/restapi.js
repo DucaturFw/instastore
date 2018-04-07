@@ -4,11 +4,28 @@ var express = require("express");
 var agent = require("superagent");
 var blockchain_1 = require("./blockchain");
 exports.app = express();
+var ADDR = "1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7";
+// ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
+// ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
 exports.app.get("/txs", function (req, res) {
-    var addr = "3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH"; // navalny
-    // addr = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
+    var addr = ADDR;
     getTransactions(addr, function (err, txs) {
+        if (err)
+            return res.json({ error: err.message || err });
         res.json({ txs: txs });
+    });
+});
+exports.app.get("/orders", function (req, res) {
+    var addr = ADDR;
+    getOrders(function (err, orders) {
+        if (err)
+            return res.json({ error: err.message || err });
+        getTransactions(addr, function (err, txs) {
+            if (err)
+                return res.json({ error: err.message || err });
+            var fos = mergeOrdersTransactions(orders, txs);
+            res.json({ orders: fos });
+        });
     });
 });
 function getTransactions(addr, callback) {
@@ -26,4 +43,24 @@ function getTransactions(addr, callback) {
         }); });
         return callback(undefined, txs);
     });
+}
+function getOrders(callback) {
+    /* let FAKE_ORDERS: IOrder[] = [
+        {data: {timestamp: 1523117058, amount: 5}, hash: "6f6d6e69000000000000001f000000029b927000"}
+    ]
+    return setTimeout(() => callback(undefined, FAKE_ORDERS), 50) */
+    var url = "http://34.207.88.113:3000/get_orders";
+    agent.get("" + url, function (err, res) {
+        if (err)
+            return callback(err, undefined);
+        return callback(undefined, res.body);
+    });
+}
+function mergeOrdersTransactions(orders, txs) {
+    txs = txs.filter(function (tx) { return tx.op_return; }); // discard txs without op_return data (can't be matched to any order)
+    console.log(txs.map(function (tx) { return tx.op_return.data; }));
+    return orders.map(function (o) { return ({
+        order: o,
+        tx: txs.filter(function (tx) { return tx.op_return.data == o.hash; })[0]
+    }); });
 }

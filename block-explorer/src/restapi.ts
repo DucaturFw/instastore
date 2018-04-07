@@ -4,13 +4,37 @@ import { isOpReturn, splitOpReturn } from "./blockchain";
 
 export let app = express()
 
+let ADDR = `1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7`
+// ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
+// ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
+
 app.get("/txs", (req, res) =>
 {
-	let addr = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
-	// addr = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
+	let addr = ADDR
 	getTransactions(addr, (err, txs) =>
 	{
+		if (err)
+			return res.json({ error: err.message || err })
+		
 		res.json({ txs })
+	})
+})
+app.get("/orders", (req, res) =>
+{
+	let addr = ADDR
+	getOrders((err, orders) =>
+	{
+		if (err)
+			return res.json({ error: err.message || err })
+		
+		getTransactions(addr, (err, txs) =>
+		{
+			if (err)
+				return res.json({ error: err.message || err })
+			
+			let fos = mergeOrdersTransactions(orders, txs)
+			res.json({ orders: fos })
+		})
 	})
 })
 
@@ -18,7 +42,17 @@ interface ITransaction
 {
 	info: blinfo.rawaddr.Tx
 	tx: blinfo.rawaddr.Out | blinfo.rawaddr.Out[]
-	op_return?: string | { data: string, length: number }
+	op_return?: { data: string, length: number }
+}
+interface IOrder
+{
+	hash: string
+	data
+}
+interface IFullOrder
+{
+	order: IOrder
+	tx: ITransaction
 }
 
 function getTransactions(addr: string, callback: (error, txs: ITransaction[]) => void)
@@ -42,4 +76,30 @@ function getTransactions(addr: string, callback: (error, txs: ITransaction[]) =>
 		
 		return callback(undefined, txs)
 	})
+}
+function getOrders(callback: (error, orders: IOrder[]) => void)
+{
+	/* let FAKE_ORDERS: IOrder[] = [
+		{data: {timestamp: 1523117058, amount: 5}, hash: "6f6d6e69000000000000001f000000029b927000"}
+	]
+	return setTimeout(() => callback(undefined, FAKE_ORDERS), 50) */
+	
+	
+	let url = `http://34.207.88.113:3000/get_orders`
+	agent.get(`${url}`, (err, res) =>
+	{
+		if (err)
+			return callback(err, undefined)
+		
+		return callback(undefined, res.body)
+	})
+}
+function mergeOrdersTransactions(orders: IOrder[], txs: ITransaction[]): IFullOrder[]
+{
+	txs = txs.filter(tx => tx.op_return) // discard txs without op_return data (can't be matched to any order)
+	console.log(txs.map(tx => tx.op_return.data))
+	return orders.map(o => ({
+		order: o,
+		tx: txs.filter(tx => tx.op_return.data == o.hash)[0]
+	}))
 }
