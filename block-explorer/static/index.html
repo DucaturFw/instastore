@@ -27,6 +27,7 @@ html, body {
 			<li v-for="order in orders">
 				<span>{{order.order.user_info.name}} ({{order.order.user_info.email}}) bought {{order.order.order_info.amount}} tickets for {{order.order.order_info.total}} BTC!</span>
 				<span v-if="order.tx != null">CONFIRMED!</span>
+				<span v-if="order.tx == null">(payment not confirmed yet)</span>
 			</li>
 		</ul>
 	</div>
