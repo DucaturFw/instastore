@@ -4,7 +4,7 @@ import { isOpReturn, splitOpReturn } from "./blockchain";
 
 export let app = express()
 
-app.all('/', function(req, res, next)
+app.all('*', function(req, res, next)
 {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'X-Requested-With')
@@ -16,13 +16,17 @@ let ADDR = `1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7`
 // ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
 ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
 
+function _err(res, err)
+{
+	res.json({ error: err })
+}
 app.get("/txs", (req, res) =>
 {
 	let addr = ADDR
 	getTransactions(addr, (err, txs) =>
 	{
 		if (err)
-			return res.json({ error: err.message || err })
+			return _err(res, err)
 		
 		res.json({ txs })
 	})
@@ -33,12 +37,12 @@ app.get("/orders", (req, res) =>
 	getOrders((err, orders) =>
 	{
 		if (err)
-			return res.json({ error: err.message || err })
+			return _err(res, err)
 		
 		getTransactions(addr, (err, txs) =>
 		{
 			if (err)
-				return res.json({ error: err.message || err })
+				return _err(res, err)
 			
 			let fos = mergeOrdersTransactions(orders, txs)
 			res.json({ orders: fos })
