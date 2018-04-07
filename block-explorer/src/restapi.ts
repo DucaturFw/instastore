@@ -4,6 +4,14 @@ import { isOpReturn, splitOpReturn } from "./blockchain";
 
 export let app = express()
 
+app.all('/', function(req, res, next)
+{
+    res.header('Access-Control-Allow-Origin', '*')
+    res.header('Access-Control-Allow-Headers', 'X-Requested-With')
+
+    next()
+})
+
 let ADDR = `1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7`
 // ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
 // ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
