@@ -11,7 +11,7 @@ exports.app.all('/', function (req, res, next) {
 });
 var ADDR = "1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7";
 // ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
-// ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
+ADDR = "1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE"; // op_return test
 exports.app.get("/txs", function (req, res) {
     var addr = ADDR;
     getTransactions(addr, function (err, txs) {
@@ -63,7 +63,7 @@ function getOrders(callback) {
 }
 function mergeOrdersTransactions(orders, txs) {
     txs = txs.filter(function (tx) { return tx.op_return; }); // discard txs without op_return data (can't be matched to any order)
-    console.log(txs.map(function (tx) { return tx.op_return.data; }));
+    // console.log(txs.map(tx => tx.op_return.data))
     return orders.map(function (o) { return ({
         order: o,
         tx: txs.filter(function (tx) { return tx.op_return.data == o.hash; })[0]

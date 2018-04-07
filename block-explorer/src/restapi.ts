@@ -14,7 +14,7 @@ app.all('/', function(req, res, next)
 
 let ADDR = `1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7`
 // ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
-// ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
+ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
 
 app.get("/txs", (req, res) =>
 {
@@ -105,7 +105,9 @@ function getOrders(callback: (error, orders: IOrder[]) => void)
 function mergeOrdersTransactions(orders: IOrder[], txs: ITransaction[]): IFullOrder[]
 {
 	txs = txs.filter(tx => tx.op_return) // discard txs without op_return data (can't be matched to any order)
-	console.log(txs.map(tx => tx.op_return.data))
+	
+	// console.log(txs.map(tx => tx.op_return.data))
+	
 	return orders.map(o => ({
 		order: o,
 		tx: txs.filter(tx => tx.op_return.data == o.hash)[0]
