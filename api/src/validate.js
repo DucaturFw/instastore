@@ -11,7 +11,6 @@ module.exports['validate_order'] = function validate_order(order) {
     // Validating user info
     if (!order.user_info) return false;
     if (!order.user_info.email) return false;
-    if (!order.user_info.name) return false;
 
     return true;
 }

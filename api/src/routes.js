@@ -21,7 +21,6 @@ function create_order(req, res) {
             total: config.price * parseInt(req.body.order_info.amount)
         },
         user_info: {
-            name: req.body.user_info.name,
             email: req.body.user_info.email
         },
         timestamp: Date.now()
