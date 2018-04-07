@@ -1,7 +1,12 @@
 {
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.16.3",
+    "superagent": "^3.8.2"
+  },
   "devDependencies": {
-    "@types/node": "^9.6.2"
+    "@types/express": "^4.11.1",
+    "@types/node": "^9.6.2",
+    "@types/superagent": "^3.5.7"
   },
   "name": "block-explorer",
   "version": "1.0.0",
