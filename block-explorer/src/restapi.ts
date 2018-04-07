@@ -1,6 +1,7 @@
 import * as express from "express"
 import * as agent from "superagent"
 import { isOpReturn, splitOpReturn } from "./blockchain";
+import { wallet_address } from "./config";
 
 export let app = express()
 
@@ -15,6 +16,9 @@ app.all('*', function(req, res, next)
 let ADDR = `1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7`
 // ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
 ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
+ADDR = `mqs15Gf9bC2Wq3Gx8TEAD9t7z7zVhXnum7`
+
+ADDR = wallet_address
 
 function _err(res, err)
 {
