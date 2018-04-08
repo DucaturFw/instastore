@@ -47,7 +47,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
   render() {
     const { loading } = this.props;
     const catId = this.props.match.params.cat || 1;
-    let cat = this.props.cats[catId];
+    const cat = this.props.cats[catId];
 
     return (
       <article>
