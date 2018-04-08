@@ -1,5 +1,6 @@
 
 import { call, put, select, takeLatest } from 'redux-saga/effects';
+import { push } from 'react-router-redux';
 import { CREATE_ORDER } from 'containers/App/constants';
 import { orderCreated, orderCreationError } from 'containers/App/actions';
 
@@ -24,6 +25,21 @@ export function* createOrder(action) {
     });
     const { total, wallet_address, order_hash } = data;
     yield put(orderCreated(email, amount, total, wallet_address, order_hash));
+
+    try {
+      let orders = JSON.parse(localStorage.getItem('orders'));
+      if (!orders || !Array.isArray(orders)) {
+        orders = [];
+      }
+      orders.push(order_hash);
+      localStorage.setItem('orders', JSON.stringify(orders));
+    } catch (err) { console.error(err); }
+    window.bitWeb.sendTransaction({
+      to: wallet_address,
+      amount: total,
+      data: order_hash,
+    });
+    yield put(push(`/order/${order_hash}`));
   } catch (err) {
     console.log('Error');
     yield put(orderCreationError(err));
@@ -34,9 +50,5 @@ export function* createOrder(action) {
  * Root saga manages watcher lifecycle
  */
 export default function* createOrderSaga() {
-  // Watches for LOAD_REPOS actions and calls getRepos when one comes in.
-  // By using `takeLatest` only the result of the latest API call is applied.
-  // It returns task descriptor (just like fork) so we can continue execution
-  // It will be cancelled automatically on component unmount
   yield takeLatest(CREATE_ORDER, createOrder);
 }

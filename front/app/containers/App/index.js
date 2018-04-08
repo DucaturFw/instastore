@@ -18,6 +18,7 @@ import {
 import { Switch, Route } from 'react-router-dom';
 import ListItemsPage from 'containers/ListItemsPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import OrderState from 'containers/OrderState';
 
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
@@ -178,6 +179,10 @@ const HomepageLayout = () => (
     <Segment style={{ height: 470, backgroundColor: '#a2c2eb' }} vertical>
       <Switch>
         <Route exact path="/" component={ListItemsPage} />
+        <Route exact path="/:cat" component={ListItemsPage} />
+        <Route exact path="/:cat/" component={ListItemsPage} />
+        <Route exact path="/order/:order_hash" component={OrderState} />
+        <Route exact path="/order/:order_hash/" component={OrderState} />
         <Route path="" component={NotFoundPage} />
       </Switch>
     </Segment>
