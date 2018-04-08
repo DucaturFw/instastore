@@ -65,7 +65,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
             </Grid.Column>
             <Grid.Column style={{ paddingTop: 100 }}>
               <H2><FormattedMessage id={'' + catId} defaultMessage={cat.bio} /></H2>
-              <Form onSubmit={() => this.props.onSubmitForm(cat.id || 1)} style={{ maxWidth: 500, margin: '0 auto' }}>
+              <Form onSubmit={() => this.props.onSubmitForm(catId)} style={{ maxWidth: 500, margin: '0 auto' }}>
                 <label htmlFor="email">
                   <Input
                     style={{ margin: '15px 0', width: 300 }}
