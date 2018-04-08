@@ -5,7 +5,6 @@ let validate_order = require('./validate').validate_order;
 let db = require('./db');
 
 const config = read_yaml.sync('./config.yaml');
-config.price = parseFloat(config.price);
 
 console.log('Config', config);
 
@@ -15,10 +14,12 @@ function create_order(req, res) {
         res.status(400).send({'error': 'Request data is not valid.'});
     }
 
+    let price = parseFloat(config.prices[req.body.order_info.id.toString()]);
+
     let order = {
         order_info: {
             amount: parseInt(req.body.order_info.amount),
-            total: config.price * parseInt(req.body.order_info.amount)
+            total: price * parseInt(req.body.order_info.amount)
         },
         user_info: {
             email: req.body.user_info.email
