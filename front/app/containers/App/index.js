@@ -35,7 +35,7 @@ const HomepageHeading = ({ mobile }) => (
         fontSize: mobile ? '2em' : '4em',
         fontWeight: 'normal',
         marginBottom: 0,
-        marginTop: mobile ? '1.5em' : '3em',
+        marginTop: mobile ? '0.75em' : '1.5em',
       }}
     />
     <Header
@@ -76,7 +76,7 @@ class DesktopContainer extends Component {
     return (
       <Responsive {...Responsive.onlyComputer}>
         <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-          <Segment inverted textAlign='center' style={{ minHeight: 700, padding: '1em 0em' }} vertical>
+          <Segment inverted textAlign='center' style={{ minHeight: 500, padding: '1em 0em' }} vertical>
             <Menu
               fixed={fixed ? 'top' : null}
               inverted={!fixed}

@@ -59,54 +59,56 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
           <title>Store</title>
           <meta name="description" content="Buy some of our best cats!" />
         </Helmet>
-        <Container textAlign='center'>
+        <Container textAlign="center">
           <Grid columns="2">
-                <Grid.Column>
-                  <img
-                    src={cat.pic}
-                    style={{width: 450, height: 450}}
+            <Grid.Column>
+              <img
+                src={cat.pic}
+                alt={cat.bio}
+                style={{ width: 450, height: 450 }}
+              />
+            </Grid.Column>
+            <Grid.Column style={{ paddingTop: 100 }}>
+              <H2><FormattedMessage id={catId} defaultMessage={cat.bio} /></H2>
+              <Form onSubmit={() => this.props.onSubmitForm(cat.id || 1)} style={{maxWidth: 500, margin: '0 auto'}}>
+                <label htmlFor="email">
+                  <Input
+                    style={{ margin: '15px 0', width: 300 }}
+                    id="email"
+                    type="text"
+                    placeholder="your@email.com"
+                    value={this.props.email}
+                    onChange={this.props.onChangeEmail}
                   />
-                  </Grid.Column>
-                  <Grid.Column style={{paddingTop: 100}}>
-                  <H2><FormattedMessage id={catId} defaultMessage={cat.bio} /></H2>
-                  <Form onSubmit={() => this.props.onSubmitForm(cat.id || 1)} style={{maxWidth: 500, margin: '0 auto'}}>
-                    <label htmlFor="email">
-                      <Input
-                        style={{margin: '15px 0', width: 300}}
-                        id="email"
-                        type="text"
-                        placeholder="your@email.com"
-                        value={this.props.email}
-                        onChange={this.props.onChangeEmail}
-                      />
-                    </label>
-                    <br />
-                    <label htmlFor="amount">
-                      <Input
-                        style={{margin: '15px 0', width: 300}}
-                        id="amount"
-                        type="number"
-                        placeholder="1"
-                        value={this.props.amount}
-                        onChange={this.props.onChangeAmount}
-                      />
-                    </label>
-                    <br />
-                    <center style={{marginTop: 20}}>
-                    <Button animated='vertical' type="submit" size="large" color="black">
-                      <Button.Content visible>
-                        Buy this kitten <Icon name='shop' />
-                      </Button.Content>
-                      <Button.Content hidden>
-                        {cat.price} <Icon name='bitcoin' />
-                      </Button.Content>
-                    </Button>
-                    </center>
-                  </Form>
-                  { loading && <List component={LoadingIndicator} />}
-                  { !loading && this.props.order_hash && <H2>{ this.props.order_hash }</H2>}
-                  { this.props.error && this.props.error.response && JSON.stringify(this.props.error.response.data.error) }
-              </Grid.Column>
+                </label>
+                <br />
+                <label htmlFor="amount">
+                  <h4 style={{ marginBottom: '-0.25em' }}>Amount:</h4>
+                  <Input
+                    style={{ margin: '15px 0', width: 300 }}
+                    id="amount"
+                    type="number"
+                    placeholder="1"
+                    value={this.props.amount}
+                    onChange={this.props.onChangeAmount}
+                  />
+                </label>
+                <br />
+                <center style={{ marginTop: 20 }}>
+                  <Button animated="vertical" type="submit" size="large" color="black">
+                    <Button.Content visible>
+                      Buy this kitten <Icon name="shop" />
+                    </Button.Content>
+                    <Button.Content hidden>
+                      {cat.price} <Icon name="bitcoin" />
+                    </Button.Content>
+                  </Button>
+                </center>
+              </Form>
+              { loading && <List component={LoadingIndicator} />}
+              { !loading && this.props.order_hash && <H2>{ this.props.order_hash }</H2>}
+              { this.props.error && this.props.error.response && JSON.stringify(this.props.error.response.data.error) }
+            </Grid.Column>
           </Grid>
         </Container>
       </article>
