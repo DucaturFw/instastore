@@ -14,5 +14,5 @@ export function splitOpReturn(script: string): { length: number, data: string }
 	
 	script = script.substr(OP_RETURN.length)
 	
-	return { length: parseInt(script.substr(0, 2), 16), data: script.substr(2) }
+	return { length: parseInt(script.substr(0, 2), 16), data: Buffer.from(script.substr(2), 'hex').toString('utf8') }
 }
