@@ -17,6 +17,7 @@ import {
   Grid,
   Icon,
   Form,
+  Segment
 } from 'semantic-ui-react';
 
 import injectSaga from 'utils/injectSaga';
@@ -47,6 +48,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
     }
 
     return (
+      <Segment style={{ height: 470, backgroundColor: '#a2c2eb' }} vertical>
       <article>
         <Helmet>
           <title>Store</title>
@@ -105,6 +107,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
           </Grid>
         </Container>
       </article>
+      </Segment>
     );
   }
 }

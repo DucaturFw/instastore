@@ -175,16 +175,14 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-    <Segment style={{ height: 470, backgroundColor: '#a2c2eb' }} vertical>
-      <Switch>
-        <Route exact path="/" component={ListItemsPage} />
-        <Route exact path="/:cat" component={ListItemsPage} />
-        <Route exact path="/:cat/" component={ListItemsPage} />
-        <Route exact path="/order/:order_hash" component={OrderState} />
-        <Route exact path="/order/:order_hash/" component={OrderState} />
-        <Route path="" component={NotFoundPage} />
-      </Switch>
-    </Segment>
+    <Switch>
+      <Route exact path="/" component={ListItemsPage} />
+      <Route exact path="/:cat" component={ListItemsPage} />
+      <Route exact path="/:cat/" component={ListItemsPage} />
+      <Route exact path="/order/:order_hash" component={OrderState} />
+      <Route exact path="/order/:order_hash/" component={OrderState} />
+      <Route path="" component={NotFoundPage} />
+    </Switch>
 
     <Segment inverted vertical style={{ padding: '5em 0em' }}>
       <Container>

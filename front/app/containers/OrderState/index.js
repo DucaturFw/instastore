@@ -10,7 +10,27 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
 import axios from 'axios';
+import { Dimmer, Loader, Progress, Image, Segment, Container, Grid } from 'semantic-ui-react'
 
+const PendingStatus = () => (
+  <Progress percent={70} indicating progress>
+    <p style={{marginTop: 20}}>Your transaction is pending.</p>
+  </Progress>
+)
+
+const MissingStatus = () => (
+  <Segment>
+    <Progress percent={0} disabled progress>
+      <p style={{marginTop: 5}}>Your transaction was not found in pool yet.</p>
+    </Progress>
+  </Segment>
+)
+
+const PayedStatus = () => (
+    <Progress percent={100} success progress>
+      <p style={{marginTop: 20}}>Your transaction was verified! Enjoy the kitties!</p>
+    </Progress>
+)
 
 export class OrderState extends React.Component { // eslint-disable-line react/prefer-stateless-function
   constructor(props) {
@@ -57,21 +77,26 @@ export class OrderState extends React.Component { // eslint-disable-line react/p
   }
 
   render() {
+    const order_status = this.state[this.props.match.params.order_hash];
+    // const order_status = 'payed';
+    // const order_status = 'pending';
+    // const order_status = 'missing';
+
     return (
-      <article>
-        <Helmet>
-          <title>OrderState</title>
-          <meta name="description" content="Description of OrderState" />
-        </Helmet>
-        <div>
-          <p>
-            Hello Neighbour,
-            check this out: { this.props.match.params.order_hash }
-            <br />
-            Your order is in state: { this.state[this.props.match.params.order_hash] }
-          </p>
-        </div>
-      </article>
+      <Container>
+        <Grid columns="1">
+          <Helmet>
+            <title>OrderState</title>
+            <meta name="description" content="Description of OrderState" />
+          </Helmet>
+          <Grid.Column style={{padding: '80px 40px', width: 800, margin: '0 auto'}}>
+            <h3>Order <a href={ `/order/${this.props.match.params.order_hash}` }>#{ this.props.match.params.order_hash }</a></h3>
+            {order_status === 'pending' && <PendingStatus />}
+            {order_status === 'missing' && <MissingStatus />}
+            {order_status === 'payed' && <PayedStatus />}
+          </Grid.Column>
+        </Grid>
+      </Container>
     );
   }
 }
