@@ -3,11 +3,9 @@ import React, { Component } from 'react'
 import {
   Button,
   Container,
-  Divider,
   Grid,
   Header,
   Icon,
-  Image,
   List,
   Menu,
   Responsive,
@@ -70,25 +68,26 @@ class DesktopContainer extends Component {
   showFixedMenu = () => this.setState({ fixed: true })
 
   render() {
-    const { children } = this.props
-    const { fixed } = this.state
+    const { children } = this.props;
+    const { fixed } = this.state;
 
     return (
-      <Responsive {...Responsive.onlyComputer}>
+      <Responsive>
         <Visibility once={false} onBottomPassed={this.showFixedMenu} onBottomPassedReverse={this.hideFixedMenu}>
-          <Segment inverted textAlign='center' style={{ minHeight: 500, padding: '1em 0em' }} vertical>
+          <Segment inverted textAlign="center" style={{ minHeight: 500, padding: '1em 0em' }} vertical>
             <Menu
               fixed={fixed ? 'top' : null}
               inverted={!fixed}
               pointing={!fixed}
               secondary={!fixed}
-              size='large'
+              size="large"
             >
               <Container>
-                <Menu.Item as={Link} active to='/'>Home</Menu.Item>
-                <Menu.Item as={Link} to='/1'>Super One</Menu.Item>
-                <Menu.Item as={Link} to='/2'>Secondary Cat</Menu.Item>
-                <Menu.Item position='right'>
+                <Menu.Item as={Link} active to="/">Home</Menu.Item>
+                <Menu.Item as={Link} to="/1">Super One</Menu.Item>
+                <Menu.Item as={Link} to="/2">Second Edition</Menu.Item>
+                <Menu.Item as={Link} to="/3">Third Generation</Menu.Item>
+                <Menu.Item position="right">
                   <Button as='a' inverted={!fixed}>Log in</Button>
                   <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Sign Up</Button>
                 </Menu.Item>
@@ -106,27 +105,27 @@ class DesktopContainer extends Component {
 
 DesktopContainer.propTypes = {
   children: PropTypes.node,
-}
+};
 
 class MobileContainer extends Component {
   state = {}
 
   handlePusherClick = () => {
-    const { sidebarOpened } = this.state
+    const { sidebarOpened } = this.state;
 
-    if (sidebarOpened) this.setState({ sidebarOpened: false })
+    if (sidebarOpened) this.setState({ sidebarOpened: false });
   }
 
   handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
 
   render() {
-    const { children } = this.props
-    const { sidebarOpened } = this.state
+    const { children } = this.props;
+    const { sidebarOpened } = this.state;
 
     return (
       <Responsive {...Responsive.onlyMobile}>
         <Sidebar.Pushable>
-          <Sidebar as={Menu} animation='uncover' inverted vertical visible={sidebarOpened}>
+          <Sidebar as={Menu} animation="uncover" inverted vertical visible={sidebarOpened}>
             <Menu.Item as='a' active>Home</Menu.Item>
             <Menu.Item as='a'>Work</Menu.Item>
             <Menu.Item as='a'>Company</Menu.Item>
@@ -155,24 +154,24 @@ class MobileContainer extends Component {
           </Sidebar.Pusher>
         </Sidebar.Pushable>
       </Responsive>
-    )
+    );
   }
 }
 
 MobileContainer.propTypes = {
   children: PropTypes.node,
-}
+};
 
 const ResponsiveContainer = ({ children }) => (
   <div>
     <DesktopContainer>{children}</DesktopContainer>
     <MobileContainer>{children}</MobileContainer>
   </div>
-)
+);
 
 ResponsiveContainer.propTypes = {
   children: PropTypes.node,
-}
+};
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
@@ -218,6 +217,6 @@ const HomepageLayout = () => (
       </Container>
     </Segment>
   </ResponsiveContainer>
-)
+);
 
-export default HomepageLayout
+export default HomepageLayout;

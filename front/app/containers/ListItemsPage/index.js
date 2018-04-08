@@ -14,27 +14,19 @@ import { compose } from 'redux';
 import {
   Button,
   Container,
-  Divider,
   Grid,
-  Header,
   Icon,
-  Image,
-  Menu,
-  Responsive,
-  Segment,
   Form,
-  Sidebar,
-  Visibility,
 } from 'semantic-ui-react';
 
-import List from '../../components/List';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
+import List from '../../components/List';
 import { makeSelectTransactionTotal, makeSelectCats,
   makeSelectTransactionHash, makeSelectTransactionWallet, makeSelectError, makeSelectLoading } from '../App/selectors';
 import { makeSelectEmail, makeSelectAmount } from './selectors';
 import { changeAmount, changeEmail } from './actions';
-import { createOrder, orderCreationError } from '../App/actions';
+import { createOrder } from '../App/actions';
 import reducer from './reducer';
 import saga from './saga';
 import Input from './Input';
@@ -46,7 +38,8 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
 
   render() {
     const { loading } = this.props;
-    let catId = this.props.match.params.cat || 1;
+    let catId = this.props.match.params.cat;
+
     let cat = this.props.cats[catId];
     if (!cat) {
       catId = 1;
@@ -70,7 +63,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
             </Grid.Column>
             <Grid.Column style={{ paddingTop: 100 }}>
               <H2><FormattedMessage id={catId} defaultMessage={cat.bio} /></H2>
-              <Form onSubmit={() => this.props.onSubmitForm(cat.id || 1)} style={{maxWidth: 500, margin: '0 auto'}}>
+              <Form onSubmit={() => this.props.onSubmitForm(cat.id || 1)} style={{ maxWidth: 500, margin: '0 auto' }}>
                 <label htmlFor="email">
                   <Input
                     style={{ margin: '15px 0', width: 300 }}
