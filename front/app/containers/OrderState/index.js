@@ -35,16 +35,23 @@ export class OrderState extends React.Component { // eslint-disable-line react/p
   }
 
   tick() {
-    const states = axios.get('http://34.207.88.113:8814/orders')
+    const that = this;
+    axios.get('http://34.207.88.113:8814/orders')
       .then((response) => {
         const data = response.data;
         console.log(data.orders.filter((o) => o.order.hash === this.props.match.params.order_hash));
         let order = data.orders.filter((o) => o.order.hash === this.props.match.params.order_hash);
         if (order.length > 0) {
           order = order[0];
+          if (order.tx) {
+            order.state = 'payed';
+          } else {
+            order.state = 'pending';
+          }
         } else {
           order = { state: 'missing' };
         }
+        that.setState({ [this.props.match.params.order_hash]: order.state });
       })
       .catch((err) => err.data);
   }
@@ -57,8 +64,12 @@ export class OrderState extends React.Component { // eslint-disable-line react/p
           <meta name="description" content="Description of OrderState" />
         </Helmet>
         <div>
-          Hello Neighbour,
-          check this out: { this.props.match.params.order_hash}
+          <p>
+            Hello Neighbour,
+            check this out: { this.props.match.params.order_hash }
+            <br />
+            Your order is in state: { this.state[this.props.match.params.order_hash] }
+          </p>
         </div>
       </article>
     );
