@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+import React, { Component } from 'react';
 import {
   Button,
   Container,
@@ -51,11 +51,11 @@ const HomepageHeading = ({ mobile }) => (
       <Icon name='right arrow' />
     </Button>
   </Container>
-)
+);
 
 HomepageHeading.propTypes = {
   mobile: PropTypes.bool,
-}
+};
 
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
@@ -99,7 +99,7 @@ class DesktopContainer extends Component {
 
         {children}
       </Responsive>
-    )
+    );
   }
 }
 
