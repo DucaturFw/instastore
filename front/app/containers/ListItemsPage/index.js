@@ -95,7 +95,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
                       Buy this kitten <Icon name="shop" />
                     </Button.Content>
                     <Button.Content hidden>
-                      {cat.price} <Icon name="bitcoin" />
+                      {cat.price * this.props.amount} <Icon name="bitcoin" />
                     </Button.Content>
                   </Button>
                 </center>
