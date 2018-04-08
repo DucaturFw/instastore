@@ -30,7 +30,7 @@ import {
 import List from '../../components/List';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
-import { makeSelectTransactionTotal,
+import { makeSelectTransactionTotal, makeSelectCats,
   makeSelectTransactionHash, makeSelectTransactionWallet, makeSelectError, makeSelectLoading } from '../App/selectors';
 import { makeSelectEmail, makeSelectAmount } from './selectors';
 import { changeAmount, changeEmail } from './actions';
@@ -46,15 +46,12 @@ import LoadingIndicator from '../../components/LoadingIndicator';
 
 
 export class ListItemsPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
-  componentDidMount() {
-    if (this.props.email && this.props.email.trim().length > 0 &&
-        this.props.amount && this.props.amount > 0) {
-      this.props.onSubmitForm();
-    }
-  }
 
   render() {
-    const { loading, error } = this.props;
+    const { loading } = this.props;
+    const catId = this.props.match.params.cat || 1;
+    let cat = this.props.cats[catId];
+    console.log(cat);
 
     return (
       <article>
@@ -66,13 +63,13 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
           <Grid columns="2">
                 <Grid.Column>
                   <img
-                    src="https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/611402.svg"
+                    src={cat.pic}
                     style={{width: 450, height: 450}}
                   />
                   </Grid.Column>
                   <Grid.Column style={{paddingTop: 100}}>
                   <H2><FormattedMessage {...messages.header} /></H2>
-                  <Form onSubmit={this.props.onSubmitForm} style={{maxWidth: 500, margin: '0 auto'}}>
+                  <Form onSubmit={() => this.props.onSubmitForm(cat.id || 1)} style={{maxWidth: 500, margin: '0 auto'}}>
                     <label htmlFor="email">
                       <Input
                         style={{margin: '20px 0', width: 300}}
@@ -121,6 +118,9 @@ ListItemsPage.propTypes = {
   onChangeEmail: PropTypes.func,
   onChangeAmount: PropTypes.func,
   amount: PropTypes.number,
+  order_hash: PropTypes.string,
+  cats: PropTypes.object,
+  match: PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -131,6 +131,7 @@ const mapStateToProps = createStructuredSelector({
   total: makeSelectTransactionTotal(),
   error: makeSelectError(),
   loading: makeSelectLoading(),
+  cats: makeSelectCats(),
 });
 
 export function mapDispatchToProps(dispatch) {
