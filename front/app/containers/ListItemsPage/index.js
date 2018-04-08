@@ -75,7 +75,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
                   <Form onSubmit={this.props.onSubmitForm} style={{maxWidth: 500, margin: '0 auto'}}>
                     <label htmlFor="email">
                       <Input
-                        style={{margin: '20px 0', width: 300}}
+                        style={{margin: '15px 0', width: 300}}
                         id="email"
                         type="text"
                         placeholder="your@email.com"
@@ -86,7 +86,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
                     <br />
                     <label htmlFor="amount">
                       <Input
-                        style={{margin: '20px 0', width: 300}}
+                        style={{margin: '15px 0', width: 300}}
                         id="amount"
                         type="number"
                         placeholder="1"
@@ -95,7 +95,16 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
                       />
                     </label>
                     <br />
-                    <center><Button type="submit">Buy</Button></center>
+                    <center style={{marginTop: 20}}>
+                    <Button animated='vertical' type="submit" size="large" color="black">
+                      <Button.Content visible>
+                        Buy this kitten <Icon name='shop' />
+                      </Button.Content>
+                      <Button.Content hidden>
+                        0.01 <Icon name='bitcoin' />
+                      </Button.Content>
+                    </Button>
+                    </center>
                   </Form>
                   { loading && <List component={LoadingIndicator} />}
                   { !loading && this.props.order_hash && <H2>{ this.props.order_hash }</H2>}
