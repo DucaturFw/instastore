@@ -5,7 +5,7 @@ const BuyButton = styled.button `
   padding: 0.45em 2.2em;
   margin: 1.25em;
   text-decoration: none;
-  border-radius: 4px;
+  border-radius: 3px;
   -webkit-font-smoothing: antialiased;
   -webkit-touch-callout: none;
   user-select: none;
