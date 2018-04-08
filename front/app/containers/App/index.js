@@ -19,6 +19,7 @@ import { Switch, Route } from 'react-router-dom';
 import ListItemsPage from 'containers/ListItemsPage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 import OrderState from 'containers/OrderState';
+import { Link } from 'react-router-dom';
 
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
@@ -84,10 +85,9 @@ class DesktopContainer extends Component {
               size='large'
             >
               <Container>
-                <Menu.Item as='a' active>Home</Menu.Item>
-                <Menu.Item as='a'>Work</Menu.Item>
-                <Menu.Item as='a'>Company</Menu.Item>
-                <Menu.Item as='a'>Careers</Menu.Item>
+                <Menu.Item as={Link} active to='/'>Home</Menu.Item>
+                <Menu.Item as={Link} to='/1'>Super One</Menu.Item>
+                <Menu.Item as={Link} to='/2'>Secondary Cat</Menu.Item>
                 <Menu.Item position='right'>
                   <Button as='a' inverted={!fixed}>Log in</Button>
                   <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>Sign Up</Button>

@@ -37,10 +37,7 @@ import { changeAmount, changeEmail } from './actions';
 import { createOrder, orderCreationError } from '../App/actions';
 import reducer from './reducer';
 import saga from './saga';
-import messages from './messages';
 import Input from './Input';
-import Section from './Section';
-import BuyButton from './BuyButton';
 import H2 from '../../components/H2';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
@@ -51,13 +48,12 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
     const { loading } = this.props;
     const catId = this.props.match.params.cat || 1;
     let cat = this.props.cats[catId];
-    console.log(cat);
 
     return (
       <article>
         <Helmet>
           <title>Store</title>
-          <meta name="description" content="Buy some of our best products!" />
+          <meta name="description" content="Buy some of our best cats!" />
         </Helmet>
         <Container textAlign='center'>
           <Grid columns="2">
@@ -68,7 +64,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
                   />
                   </Grid.Column>
                   <Grid.Column style={{paddingTop: 100}}>
-                  <H2><FormattedMessage {...messages.header} /></H2>
+                  <H2><FormattedMessage id={catId} defaultMessage={cat.bio} /></H2>
                   <Form onSubmit={() => this.props.onSubmitForm(cat.id || 1)} style={{maxWidth: 500, margin: '0 auto'}}>
                     <label htmlFor="email">
                       <Input
@@ -98,7 +94,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
                         Buy this kitten <Icon name='shop' />
                       </Button.Content>
                       <Button.Content hidden>
-                        0.01 <Icon name='bitcoin' />
+                        {cat.price} <Icon name='bitcoin' />
                       </Button.Content>
                     </Button>
                     </center>
