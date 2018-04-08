@@ -13,9 +13,6 @@
 import { fromJS } from 'immutable';
 
 import {
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS,
-  LOAD_REPOS_ERROR,
   CREATE_ORDER,
   CREATE_ORDER_SUCCESS,
   CREATE_ORDER_ERROR,
@@ -36,6 +33,18 @@ const initialState = fromJS({
     hash: false,
     total: 0,
     wallet_address: false,
+  },
+  cats: {
+    1: {
+      pic: 'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/611402.svg',
+      bio: 'Some cool words about cat',
+      gen: 1,
+    },
+    2: {
+      pic: 'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/208283.svg',
+      bio: 'Some cool words about cat',
+      gen: 1,
+    },
   },
 });
 
@@ -59,6 +68,7 @@ function appReducer(state = initialState, action) {
         .set('loading', false)
         .set('currentUser', action.email);
     case CREATE_ORDER_ERROR:
+    console.log(action.error);
       return state
         .set('error', action.error)
         .setIn(['transactionData', 'hash'], false)

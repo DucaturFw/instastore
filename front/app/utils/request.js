@@ -48,10 +48,9 @@ export default function request(url, options) {
 
 export function postData(url, data) {
   // Default options are marked with *
-  let headers = {
-      'Content-Type': 'application/json',
+  const headers = {
+    'Content-Type': 'application/json',
   };
   return axios.post(url, data, { headers, mode: 'no-cors' })
-  .then((response) => response.json()) // parses response to JSON
-  .catch((err) => { throw DOMException(err); });
+  .then((response) => response.json()); // parses response to JSON
 }

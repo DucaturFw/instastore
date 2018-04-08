@@ -79,6 +79,7 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
             </Form>
             { loading && <List component={LoadingIndicator} />}
             { !loading && this.props.order_hash && <H2>{ this.props.order_hash }</H2>}
+            { this.props.error && JSON.stringify(this.props.error.response.data.error) }
           </Section>
         </div>
       </article>

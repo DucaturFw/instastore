@@ -25,6 +25,7 @@ export function* createOrder(action) {
     const { total, wallet_address, order_hash } = data;
     yield put(orderCreated(email, amount, total, wallet_address, order_hash));
   } catch (err) {
+    console.log('Error');
     yield put(orderCreationError(err));
   }
 }
