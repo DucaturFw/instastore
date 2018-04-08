@@ -12,8 +12,8 @@ import {
 
 // The initial state of the App
 const initialState = fromJS({
-  email: '',
-  amount: 0,
+  email: 'example@gmail.com',
+  amount: 1,
 });
 
 function listItemsPageReducer(state = initialState, action) {

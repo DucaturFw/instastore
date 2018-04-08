@@ -52,5 +52,5 @@ export function postData(url, data) {
     'Content-Type': 'application/json',
   };
   return axios.post(url, data, { headers, mode: 'no-cors' })
-  .then((response) => response.json()); // parses response to JSON
+  .then((response) => response.data); // parses response to JSON
 }

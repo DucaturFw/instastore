@@ -11,7 +11,23 @@ import { Helmet } from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
+import {
+  Button,
+  Container,
+  Divider,
+  Grid,
+  Header,
+  Icon,
+  Image,
+  Menu,
+  Responsive,
+  Segment,
+  Form,
+  Sidebar,
+  Visibility,
+} from 'semantic-ui-react';
 
+import List from '../../components/List';
 import injectSaga from 'utils/injectSaga';
 import injectReducer from 'utils/injectReducer';
 import { makeSelectTransactionTotal,
@@ -22,12 +38,10 @@ import { createOrder, orderCreationError } from '../App/actions';
 import reducer from './reducer';
 import saga from './saga';
 import messages from './messages';
-import Form from './Form';
 import Input from './Input';
 import Section from './Section';
 import BuyButton from './BuyButton';
 import H2 from '../../components/H2';
-import List from '../../components/List';
 import LoadingIndicator from '../../components/LoadingIndicator';
 
 
@@ -48,40 +62,47 @@ export class ListItemsPage extends React.Component { // eslint-disable-line reac
           <title>Store</title>
           <meta name="description" content="Buy some of our best products!" />
         </Helmet>
-        <div>
-          <FormattedMessage {...messages.header} />
-          <Section>
-            <H2>
-              <FormattedMessage {...messages.mainDescription} />
-            </H2>
-            <Form onSubmit={this.props.onSubmitForm}>
-              <label htmlFor="email">
-                <FormattedMessage {...messages.emailLabel} /> <Input
-                  id="email"
-                  type="text"
-                  placeholder="your@email.com"
-                  value={this.props.email}
-                  onChange={this.props.onChangeEmail}
-                />
-              </label>
-              <br />
-              <label htmlFor="amount">
-                <FormattedMessage {...messages.amountLabel} /> <Input
-                  id="amount"
-                  type="number"
-                  placeholder="1"
-                  value={this.props.amount}
-                  onChange={this.props.onChangeAmount}
-                />
-              </label>
-              <br />
-              <center><BuyButton type="submit">Buy</BuyButton></center>
-            </Form>
-            { loading && <List component={LoadingIndicator} />}
-            { !loading && this.props.order_hash && <H2>{ this.props.order_hash }</H2>}
-            { this.props.error && JSON.stringify(this.props.error.response.data.error) }
-          </Section>
-        </div>
+        <Container textAlign='center'>
+          <Grid columns="2">
+                <Grid.Column>
+                  <img
+                    src="https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/611402.svg"
+                    style={{width: 450, height: 450}}
+                  />
+                  </Grid.Column>
+                  <Grid.Column style={{paddingTop: 100}}>
+                  <H2><FormattedMessage {...messages.header} /></H2>
+                  <Form onSubmit={this.props.onSubmitForm} style={{maxWidth: 500, margin: '0 auto'}}>
+                    <label htmlFor="email">
+                      <Input
+                        style={{margin: '20px 0', width: 300}}
+                        id="email"
+                        type="text"
+                        placeholder="your@email.com"
+                        value={this.props.email}
+                        onChange={this.props.onChangeEmail}
+                      />
+                    </label>
+                    <br />
+                    <label htmlFor="amount">
+                      <Input
+                        style={{margin: '20px 0', width: 300}}
+                        id="amount"
+                        type="number"
+                        placeholder="1"
+                        value={this.props.amount}
+                        onChange={this.props.onChangeAmount}
+                      />
+                    </label>
+                    <br />
+                    <center><Button type="submit">Buy</Button></center>
+                  </Form>
+                  { loading && <List component={LoadingIndicator} />}
+                  { !loading && this.props.order_hash && <H2>{ this.props.order_hash }</H2>}
+                  { this.props.error && this.props.error.response && JSON.stringify(this.props.error.response.data.error) }
+              </Grid.Column>
+          </Grid>
+        </Container>
       </article>
     );
   }

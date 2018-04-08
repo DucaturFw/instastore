@@ -8,7 +8,7 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
     header: {
         id: 'app.containers.ListItemsPage.header',
-        defaultMessage: 'We offer you outstanding performance on our event!',
+        defaultMessage: 'Buy this kitten with PhD, Edsger W. Dijkstra',
     },
     emailLabel: {
         id: 'app.containers.ListItemsPage.emailLabel',
@@ -20,6 +20,6 @@ export default defineMessages({
     },
     mainDescription: {
         id: 'app.containers.ListItemsPage.descr',
-        defaultMessage: 'Our products are da best of da best!',
+        defaultMessage: 'Buy this kitten with PhD, Edsger W. Dijkstra',
     },
 });
