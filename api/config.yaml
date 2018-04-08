@@ -1,2 +1,5 @@
 wallet_address: mqs15Gf9bC2Wq3Gx8TEAD9t7z7zVhXnum7
-price: 0.01
+prices:
+  1: 0.012
+  2: 0.008
+  3: 0.05
