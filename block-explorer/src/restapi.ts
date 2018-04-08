@@ -1,10 +1,11 @@
 import * as express from "express"
 import * as agent from "superagent"
 import { isOpReturn, splitOpReturn } from "./blockchain";
+import { wallet_address } from "./config";
 
 export let app = express()
 
-app.all('/', function(req, res, next)
+app.all('*', function(req, res, next)
 {
     res.header('Access-Control-Allow-Origin', '*')
     res.header('Access-Control-Allow-Headers', 'X-Requested-With')
@@ -15,14 +16,21 @@ app.all('/', function(req, res, next)
 let ADDR = `1DMCGx8KScwVeeDbLiAR8WdJfA6gChKkY7`
 // ADDR = `3MQTRzttkMtsMEy9dRq4Sf1xiSsWKgQkyH` // navalny
 ADDR = `1E7Ej41tpkWCCHPGtaRiVGndCVtz5Ym8XE` // op_return test
+ADDR = `mqs15Gf9bC2Wq3Gx8TEAD9t7z7zVhXnum7`
 
+ADDR = wallet_address
+
+function _err(res, err)
+{
+	res.json({ error: err })
+}
 app.get("/txs", (req, res) =>
 {
 	let addr = ADDR
 	getTransactions(addr, (err, txs) =>
 	{
 		if (err)
-			return res.json({ error: err.message || err })
+			return _err(res, err)
 		
 		res.json({ txs })
 	})
@@ -33,12 +41,12 @@ app.get("/orders", (req, res) =>
 	getOrders((err, orders) =>
 	{
 		if (err)
-			return res.json({ error: err.message || err })
+			return _err(res, err)
 		
 		getTransactions(addr, (err, txs) =>
 		{
 			if (err)
-				return res.json({ error: err.message || err })
+				return _err(res, err)
 			
 			let fos = mergeOrdersTransactions(orders, txs)
 			res.json({ orders: fos })
@@ -65,7 +73,7 @@ interface IFullOrder
 
 function getTransactions(addr: string, callback: (error, txs: ITransaction[]) => void)
 {
-	let url = `https://blockchain.info/rawaddr/`
+	let url = `https://testnet.blockchain.info/rawaddr/`
 	agent.get(`${url}${addr}`, (err, res) =>
 	{
 		if (err)
