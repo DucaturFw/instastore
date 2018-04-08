@@ -62,3 +62,7 @@ build/
 
 # next.js build output
 .next
+
+# Add this fucking build to gitignore
+build/
+
